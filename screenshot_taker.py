@@ -4,7 +4,7 @@ import os
 
 time.sleep(1)
 
-static_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'images', 'screenshot.png',)
+static_path = "static/images/screenshot.png"
 
 while True:
     screenshot = pyautogui.screenshot("screenshot.png")
