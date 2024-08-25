@@ -52,7 +52,7 @@ minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
 
-process1 = subprocess.Popen(["python", "screenshot_taker.py"])
-process2 = subprocess.Popen(["python", "website.py"])
+process1 = subprocess.Popen(["python", os.path.join(os.path.dirname(os.path.abspath(__file__))), "test-beta", "screenshot_taker.py"])
+process2 = subprocess.Popen(["python", os.path.join(os.path.dirname(os.path.abspath(__file__))), "test-beta", "website.py"])
 
 app.mainloop()
