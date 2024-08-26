@@ -84,11 +84,11 @@
                 });
             });
 
-            
             socket.on('update_image', function(data) {
                 const img = document.getElementById("screenshot");
-                img.src = data.src + "?" + new Date().getTime();
+                img.src = "/static/images/screenshot.png?" + data.timestamp;
             });
+
         });
     </script>
 </head>
