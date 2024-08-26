@@ -11,7 +11,6 @@ def minimize_to_tray():
 
     def on_quit(icon, item):
         icon.stop()
-        process1.kill()
         process2.kill()
         app.quit()
         sys.exit()
@@ -32,7 +31,6 @@ def minimize_to_tray():
     icon.run()
 
 def quit():
-    process1.kill()
     process2.kill()
     app.quit()
     sys.exit()
@@ -52,7 +50,6 @@ minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
 
-process1 = subprocess.Popen(["python", "test-beta/screenshot_taker.py"])
 process2 = subprocess.Popen(["python", "test-beta/website.py"])
 
 app.mainloop()
