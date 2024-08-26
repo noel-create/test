@@ -43,7 +43,7 @@ def on_minimize_click():
 app = CTk()
 app.geometry("500x400")
 
-lab1 = CTkLabel(app, text="Tkinter test app")
+lab1 = CTkLabel(app, text="Remote Control Website")
 lab1.place(relx=0.5, rely=0.4, anchor=CENTER)
 
 minimize_button = CTkButton(app, text="Minimize to Tray", command=on_minimize_click)

