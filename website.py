@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-screenshot_path = "screenshot.png"
+screenshot_path = "test-beta/screenshot.png"
 
 
 button_states = {
