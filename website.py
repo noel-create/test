@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-screenshot_path = "test-beta/screenshot.png"
+screenshot_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screenshot.png')
 
 
 button_states = {
@@ -73,7 +73,7 @@ def take_screenshots():
         paste_position = (final_x, final_y)
         screenshot.paste(cursor_image, paste_position, cursor_image)
         screenshot.save(screenshot_path)
-        socketio.emit('update_image', {'src': 'test-beta/screenshot.png'})
+        socketio.emit('update_image', {'src': screenshot_path})
         time.sleep(0.25)
 
 @socketio.on('connect')
