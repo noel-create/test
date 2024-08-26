@@ -17,8 +17,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-screenshot_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates', 'screenshot.png')
-
 
 button_states = {
     'Mouse Left': False,
@@ -66,6 +64,7 @@ def continuous_action(button_id):
 
 def take_screenshots():
     while True:
+        screenshot_path = os.path.join(app.static_folder, 'images', 'screenshot.png')
         screenshot = pyautogui.screenshot()
         x, y = pyautogui.position()
         final_x = x - cursor_width // 2
