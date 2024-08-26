@@ -73,7 +73,7 @@ def take_screenshots():
         paste_position = (final_x, final_y)
         screenshot.paste(cursor_image, paste_position, cursor_image)
         screenshot.save(screenshot_path)
-        socketio.emit('update_image', {'src': 'screenshot.png'})
+        socketio.emit('update_image', {'src': 'test-beta/screenshot.png'})
         time.sleep(0.25)
 
 @socketio.on('connect')
