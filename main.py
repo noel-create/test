@@ -3,12 +3,13 @@ import pystray
 from PIL import Image, ImageDraw
 import sys
 import threading
-import keyboard
+import subprocess
 
 def minimize_to_tray():
     app.withdraw()
 
     def on_quit(icon, item):
+        process2.kill()
         icon.stop()
         app.quit()
         sys.exit()
@@ -29,22 +30,26 @@ def minimize_to_tray():
     icon.run()
 
 def quit():
+    process2.kill()
     app.quit()
     sys.exit()
+
 
 def on_minimize_click():
     threading.Thread(target=minimize_to_tray).start()
 
 app = CTk()
-app.geometry("500x400")
+app.geometry("700x600")
 
-lab1 = CTkLabel(app, text="Tkinter test app")
-lab1.place(relx=0.5, rely=0.4, anchor=CENTER)
+lab1 = CTkLabel(app, text="Remote Control Website")
+lab1.place(relx=0.5, rely=0.1, anchor=CENTER)
 
 minimize_button = CTkButton(app, text="Minimize to Tray", command=on_minimize_click)
 minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
+
+process2 = subprocess.Popen(['python', 'website.py'])
 
 app.mainloop()
