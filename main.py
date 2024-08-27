@@ -12,6 +12,8 @@ win32gui.ShowWindow(the_program_to_hide , win32con.SW_HIDE)
 
 
 def on_start():
+    with open("test-beta/settings/settings.txt", "w") as f:
+        f.write(str(text_input.get()))
     process_started = True
     process2 = subprocess.Popen(["python", "test-beta/website.py"])
 
