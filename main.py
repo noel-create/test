@@ -4,17 +4,12 @@ from PIL import Image, ImageDraw
 import sys
 import threading
 import subprocess
-import win32gui #type: ignore
-import win32con #type: ignore
-
-the_program_to_hide = win32gui.GetForegroundWindow()
-win32gui.ShowWindow(the_program_to_hide , win32con.SW_HIDE)
 
 def minimize_to_tray():
     app.withdraw()
 
     def on_quit(icon, item):
-        process.terminate()
+        process2.kill()
         icon.stop()
         app.quit()
         sys.exit()
@@ -34,15 +29,14 @@ def minimize_to_tray():
 
     icon.run()
 
+def quit():
+    process2.kill()
+    app.quit()
+    sys.exit()
 
 
 def on_minimize_click():
     threading.Thread(target=minimize_to_tray).start()
-
-def quit():
-    process.terminate()
-    app.quit()
-    sys.exit()
 
 app = CTk()
 app.geometry("700x600")
@@ -56,6 +50,6 @@ minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
 
-process = subprocess.Popen(['python', 'test-beta/website.py'])
+process2 = subprocess.Popen(['python', 'website.py'])
 
 app.mainloop()
