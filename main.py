@@ -50,6 +50,6 @@ minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
 
-process2 = subprocess.Popen(['python', 'website.py'])
+process2 = subprocess.Popen(['python', 'test-beta/website.py'])
 
 app.mainloop()
