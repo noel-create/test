@@ -10,17 +10,11 @@ import win32con #type: ignore
 the_program_to_hide = win32gui.GetForegroundWindow()
 win32gui.ShowWindow(the_program_to_hide , win32con.SW_HIDE)
 
-
-def on_start():
-    with open("test-beta/settings/settings.txt", "w") as f:
-        f.write(str(text_input.get()))
-    process_started = True
-    process2 = subprocess.Popen(["python", "test-beta/website.py"])
-
 def minimize_to_tray():
     app.withdraw()
 
     def on_quit(icon, item):
+        process.terminate()
         icon.stop()
         app.quit()
         sys.exit()
@@ -40,15 +34,15 @@ def minimize_to_tray():
 
     icon.run()
 
-def quit():
-    if process_started == True:
-        process2.kill()
-    app.quit()
-    sys.exit()
 
 
 def on_minimize_click():
     threading.Thread(target=minimize_to_tray).start()
+
+def quit():
+    process.terminate()
+    app.quit()
+    sys.exit()
 
 app = CTk()
 app.geometry("700x600")
@@ -56,16 +50,12 @@ app.geometry("700x600")
 lab1 = CTkLabel(app, text="Remote Control Website")
 lab1.place(relx=0.5, rely=0.1, anchor=CENTER)
 
-lab1 = CTkLabel(app, text="Discord Webhook URL:")
-lab1.place(relx=0.5, rely=0.1, anchor=CENTER)
-
 minimize_button = CTkButton(app, text="Minimize to Tray", command=on_minimize_click)
 minimize_button.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-text_input = CTkEntry(app, width=200)
-text_input.place(relx=0.5, rely=0.2, anchor=CENTER)
-
 quit_button = CTkButton(app, text="Exit", command=quit)
 quit_button.place(relx=0.5, rely=0.75, anchor=CENTER)
+
+process = subprocess.Popen(['python', 'test-beta/website.py'])
 
 app.mainloop()
