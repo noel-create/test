@@ -7,11 +7,6 @@ import pyautogui
 from PIL import Image 
 from pyngrok import ngrok # type: ignore
 from discord_webhook import DiscordWebhook
-import win32gui #type: ignore
-import win32con #type: ignore
-
-the_program_to_hide = win32gui.GetForegroundWindow()
-win32gui.ShowWindow(the_program_to_hide , win32con.SW_HIDE)
 
 path_to_cursor_folder = (os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cursor',))
 path_to_cursor = (os.path.join(path_to_cursor_folder, 'cursor.png',))
