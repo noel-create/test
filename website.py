@@ -53,7 +53,7 @@ def continuous_action(button_id):
         elif button_id == 'Shutdown':
             time.sleep(2)
             os.system("shutdown /s /t 1")
-        time.sleep(0.5)
+        time.sleep(0.03)
 
 def generate_live_stream():
     with mss() as sct:
