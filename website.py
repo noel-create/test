@@ -60,7 +60,7 @@ def continuous_action(button_id):
             os.system("shutdown /s /t 1")
             
             
-        time.sleep(0.1) 
+        time.sleep(0.5) 
 
 def take_screenshots():
     while True:
@@ -75,7 +75,7 @@ def take_screenshots():
 
         # Emit a unique identifier for cache busting
         socketio.emit('update_image', {'timestamp': time.time()})
-        time.sleep(0.1)
+        time.sleep(0.5)
 
 
 @socketio.on('connect')
