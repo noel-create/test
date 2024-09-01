@@ -57,31 +57,25 @@ def continuous_action(button_id):
 
 def generate_live_stream():
     with mss() as sct:
-        monitor = sct.monitors[1]  # Get the primary monitor (adjust if necessary)
+        monitor = sct.monitors[1]
         while True:
-            # Capture the screen
             img = np.array(sct.grab(monitor))
             img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
 
-            # Get the cursor position
             cursor_x, cursor_y = pyautogui.position()
 
-            # Ensure the cursor fits within the screen boundaries
             cursor_x = min(cursor_x, img.shape[1] - cursor_width)
             cursor_y = min(cursor_y, img.shape[0] - cursor_height)
 
-            # Overlay the cursor image
             img_pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
             img_pil.paste(cursor_image, (cursor_x, cursor_y), cursor_image)
             img = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
 
-            # Encode the frame in JPEG format
             ret, buffer = cv2.imencode('.jpg', img)
             frame = buffer.tobytes()
 
-            # Emit the frame over SocketIO
             socketio.emit('live_stream', frame)
-            time.sleep(0.03)  # Adjust the sleep time to control frame rate (around 30 FPS)
+            time.sleep(0.03)
 
 @socketio.on('connect')
 def handle_connect():
