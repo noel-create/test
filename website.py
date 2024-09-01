@@ -3,12 +3,13 @@ from flask_socketio import SocketIO, emit
 import threading
 import time
 import os
-import cv2 #type: ignore
+import cv2
 import numpy as np
 from mss import mss
-from pyngrok import ngrok  # type: ignore
+from pyngrok import ngrok
 import pyautogui
 from discord_webhook import DiscordWebhook
+from PIL import Image
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -23,6 +24,11 @@ button_states = {
     'Right Click': False,
     'Shutdown': False
 }
+
+# Load the cursor image
+cursor_image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cursor.png')
+cursor_image = Image.open(cursor_image_path).convert("RGBA")
+cursor_width, cursor_height = cursor_image.size
 
 def continuous_action(button_id):
     while button_states[button_id]:
@@ -55,11 +61,24 @@ def generate_live_stream():
         while True:
             # Capture the screen
             img = np.array(sct.grab(monitor))
-            # Convert to BGR format for OpenCV
             img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
+
+            # Get the cursor position
+            cursor_x, cursor_y = pyautogui.position()
+
+            # Ensure the cursor fits within the screen boundaries
+            cursor_x = min(cursor_x, img.shape[1] - cursor_width)
+            cursor_y = min(cursor_y, img.shape[0] - cursor_height)
+
+            # Overlay the cursor image
+            img_pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+            img_pil.paste(cursor_image, (cursor_x, cursor_y), cursor_image)
+            img = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
+
             # Encode the frame in JPEG format
             ret, buffer = cv2.imencode('.jpg', img)
             frame = buffer.tobytes()
+
             # Emit the frame over SocketIO
             socketio.emit('live_stream', frame)
             time.sleep(0.03)  # Adjust the sleep time to control frame rate (around 30 FPS)
